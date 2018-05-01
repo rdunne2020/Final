@@ -83,13 +83,21 @@ wc_unittest : wc.o wc_test.o gtest_main.a
 
 all: build doc doczip
 
+check: cpp_check valgrind
+
+cpp_check: 
+	~/Code/CS3560/CPP/cppcheck/cppcheck --enable=all .
+
+valgrind: count
+	valgrind ./count
+
 count: build
 
 build : final.o
 	$(CXX) final.o -o count
 final.o: final.cc
 	$(CXX) -c final.cc
-make_doc : 
+doc : 
 	doxygen Doxyfile
 
 doczip : html latex
